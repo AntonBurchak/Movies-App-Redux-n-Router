@@ -1,0 +1,47 @@
+
+.app {
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+  &__list {
+    box-sizing: border-box;
+    
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__sort {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  &__films {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  &__links {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0;
+    button, a {
+      padding: 10px;
+      background: rgb(150, 150, 150);
+      border-radius: 5px;
+      color: #000;
+      text-decoration: none;
+      font-weight: bold;
+      border: 0;
+      outline: 0;
+      cursor: pointer;
+    }
+  }
+}
+.form {
+  display: flex;
+  flex-direction: column;
+}
