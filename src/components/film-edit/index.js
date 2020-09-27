@@ -1,16 +1,17 @@
-import { FilmInfo } from './FilmInfo';
+import FilmEdit from './component'
 import { connect } from 'react-redux'
-import { insertFilmInfo, deleteFilm } from '../../core/actions'
+import { insertFilmInfo, setChangedFilm, updateFilmInfo } from '../../core/actions'
 
 const mapStateToProps = (state) => ({
     viewed: state.filmlistReducer.viewed,
-    films: state.filmlistReducer.films,
     actors: state.filmlistReducer.actors,
+    films: state.filmlistReducer.films,
 })
 
 const mapDispatchToProps = ({
     insertFilmInfo,
-    deleteFilm
+    setChangedFilm,
+    updateFilmInfo
 })
 
 const withStore = connect(
@@ -18,4 +19,4 @@ const withStore = connect(
     mapDispatchToProps
 )
 
-export default withStore(FilmInfo);
+export default withStore(FilmEdit);

@@ -1,33 +1,24 @@
 export const GET_FILMS_LIST = 'GET_FILMS_LIST';
-
 export const SET_FILMS_LIST = 'SET_FILMS_LIST';
-
 export const SEARCH_BY_TEXT = 'SEARCH_BY_TEXT';
-
 export const SORT_BY_LIKED = 'SORT_BY_LIKED';
-
 export const SORT_BY_STARS = 'SORT_BY_STARS';
-
 export const SORT_BY = 'SORT_BY';
-
 export const RESET_SORTING = 'RESET_SORTING';
-
 export const SET_LIKED_FILM = 'SET_LIKED_FILM';
-
 export const SET_DISLIKED_FILM = 'SET_DISLIKED_FILM';
-
 export const SET_STARS_ON_FILM = 'SET_STARS_ON_FILM';
-
 export const UPDATE_FILMS_ARRAY = 'UPDATE_FILMS_ARRAY';
-
 export const GENERATE_HASH = 'GENERATE_HASH';
-
 export const INSERT_FILM_INFO = 'INSERT_FILM_INFO';
-
 export const SET_LOGGED = 'SET_LOGGED';
-
 export const SET_CHANGED_FILM = 'SET_CHANGED_FILM';
-
 export const DELETE_FILM = 'DELETE_FILM';
-
-
+export const FILMS_LIST_LOADING = 'FILMS_LIST_LOADING';
+export const FILMS_LIST_LOADED = 'FILMS_LIST_LOADED';
+export const ACTORS_LIST_LOADED = 'ACTORS_LIST_LOADED';
+export const LOGIN_USER = 'LOGIN_USER';
+export const LOG_OUT_USER = 'LOG_OUT_USER';
+export const REGISTER_USER = 'REGISTER_USER';
+export const GET_USERS_LIST = 'GET_USERS_LIST';
+export const RESET_FILM_INFO = 'RESET_FILM_INFO';

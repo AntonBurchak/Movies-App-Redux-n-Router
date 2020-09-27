@@ -3,10 +3,7 @@ import { withRouter, Link } from 'react-router-dom'
 
 const LogButton = (props) => {
     const logOut = () => {
-        const { setLogged, isLogged } = props;
-        if (isLogged) {
-            setLogged(false);
-        }
+        props.logOutUser();
         props.history.push('/home');
     }
     return (

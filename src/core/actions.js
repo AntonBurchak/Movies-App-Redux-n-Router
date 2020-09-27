@@ -1,77 +1,138 @@
-import { GET_FILMS_LIST } from './constants'
-import { SET_FILMS_LIST } from './constants'
-import { SEARCH_BY_TEXT } from './constants'
-import { SORT_BY } from './constants'
-import { RESET_SORTING } from './constants'
-import { SET_LIKED_FILM } from './constants'
-import { SET_DISLIKED_FILM } from './constants'
-import { SET_STARS_ON_FILM } from './constants'
-import { GENERATE_HASH } from './constants'
-import { INSERT_FILM_INFO } from './constants'
-import { SET_LOGGED } from './constants'
-import { SET_CHANGED_FILM } from './constants'
-import { DELETE_FILM } from './constants'
+import * as constants from './constants';
 
 export const getFilmsList = (payload) => ({
-    type: GET_FILMS_LIST,
+    type: constants.GET_FILMS_LIST,
     payload
-}) 
+})
 
 export const setFilmsList = (payload) => ({
-    type: SET_FILMS_LIST,
+    type: constants.SET_FILMS_LIST,
     payload
-}) 
+})
 
 export const searchByText = (payload) => ({
-    type: SEARCH_BY_TEXT,
+    type: constants.SEARCH_BY_TEXT,
     text: payload
 })
 
 export const sortBy = (payload) => ({
-    type: SORT_BY,
+    type: constants.SORT_BY,
     property: payload
 })
 
 export const resetSorting = () => ({
-    type: RESET_SORTING
+    type: constants.RESET_SORTING
 })
 
 export const setLikedFilm = (payload) => ({
-    type: SET_LIKED_FILM,
+    type: constants.SET_LIKED_FILM,
     id: payload
 })
 
 export const setDislikedFilm = (payload) => ({
-    type: SET_DISLIKED_FILM,
+    type: constants.SET_DISLIKED_FILM,
     id: payload
 })
 
 export const setStarsOnFilm = (id, stars) => ({
-    type: SET_STARS_ON_FILM,
+    type: constants.SET_STARS_ON_FILM,
     id,
     stars
 })
 
 export const generateHash = () => ({
-    type: GENERATE_HASH
+    type: constants.GENERATE_HASH
 })
 
-export const insertFilmInfo = (id) => ({
-    type: INSERT_FILM_INFO,
-    id
-})
-
-export const setLogged = (logged) => ({
-    type: SET_LOGGED,
-    logged
+export const insertFilmInfo = (film) => ({
+    type: constants.INSERT_FILM_INFO,
+    film
 })
 
 export const setChangedFilm = (film) => ({
-    type: SET_CHANGED_FILM,
+    type: constants.SET_CHANGED_FILM,
     film
 })
 
 export const deleteFilm = (id) => ({
-    type: DELETE_FILM,
+    type: constants.DELETE_FILM,
     id
 })
+
+export const filmsListLoaded = (payload) => ({
+    type: constants.FILMS_LIST_LOADED,
+    payload
+})
+
+export const actorsListLoaded = (payload) => ({
+    type: constants.ACTORS_LIST_LOADED,
+    payload
+})
+
+export const setLoginUser = (user) => ({
+    type: constants.LOGIN_USER,
+    user
+})
+
+export const setRegisterUser = (user) => ({
+    type: constants.REGISTER_USER,
+    user
+})
+
+export const logOutUser = () => ({
+    type: constants.LOG_OUT_USER,
+})
+
+export const getUsersList = (users) => ({
+    type: constants.GET_USERS_LIST,
+    users
+})
+
+export const resetFilmInfo = () => ({
+    type: constants.RESET_FILM_INFO
+})
+
+export const fetchFilmsList = () => (dispatch, getState, callApi) => {
+    callApi('movies').then(response => {
+        console.log(response.data);
+        dispatch(filmsListLoaded(response.data));
+    })
+}
+
+export const fetchActorsList = () => (dispatch, getState, callApi) => {
+    callApi('actors').then(response => {
+        dispatch(actorsListLoaded(response.data));
+    })
+}
+
+export const fetchUsersList = () => (dispatch, getState, callApi) => {
+    callApi('users').then(response => {
+        dispatch(getUsersList(response.data));
+    })
+}
+
+export const loginUser = (login, password) => (dispatch, getState, callApi) => {
+    callApi(`users?name=${login}&password=${password}`).then(response => {
+        dispatch(setLoginUser(response.data));
+    })
+}
+
+export const registerUser = (user) => (dispatch, getState, callApi) => {
+    callApi('users', 'post', user).then(response => {
+        dispatch(setRegisterUser(response.data));
+        dispatch(fetchUsersList())
+    })
+}
+
+export const fetchFilmInfo = (id) => (dispatch, getState, callApi) => {
+    callApi(`movies/${id}`).then(response => {
+        dispatch(insertFilmInfo(response.data));
+    })
+}
+
+export const updateFilmInfo = (id, data) => (dispatch, getState, callApi) => {
+    callApi(`movies/${id}`, 'put', data).then(response => {
+        dispatch(insertFilmInfo(response.data));
+        dispatch(fetchFilmsList());
+    })
+}

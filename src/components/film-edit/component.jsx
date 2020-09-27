@@ -1,15 +1,14 @@
 import React from 'react';
 
-
-import '../FilmInfo/filminfo.scss';
+import '../film-info/film-info.scss';
 import './form-edit.scss';
 
-export function FilmEdit(props) {
-    const { viewed, insertFilmInfo, setChangedFilm } = props;
-
+const FilmEdit = (props) => {
+    const viewed = props.viewed;
     const id = +props.match.params.id;
+    const film = props.films.find(film => film.id === id);
 
-    insertFilmInfo(id);
+    props.insertFilmInfo(film);
 
     const prepareData = (e) => {
         e.preventDefault();
@@ -26,13 +25,11 @@ export function FilmEdit(props) {
             stars: viewed.stars,
             liked: viewed.liked
         }
-        console.log(editedFilm)
-        setChangedFilm(editedFilm);
-
+        props.updateFilmInfo(id, editedFilm);
         props.history.push(`/film/${id}`);
     }
 
-    // console.log(films,id, film);
+    
     return (
         <React.Fragment>
             {viewed ? (
@@ -71,3 +68,4 @@ export function FilmEdit(props) {
     )
 }
 
+export default FilmEdit;

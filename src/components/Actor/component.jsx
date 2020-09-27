@@ -1,14 +1,10 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
-export const Actor = (props) => {
-
+const Actor = (props) => {
     const id = +props.match.params.id;
-    const { actors } = props;
-    const actor = actors.find(actor => actor.id === id);
+    const actor = props.actors.find(actor => actor.id === id);
 
-    const goBack = () => {
-        props.history.goBack()
-    }
+    const goBack = useCallback(props.history.goBack, [])
 
     return (
         <React.Fragment>
@@ -19,3 +15,5 @@ export const Actor = (props) => {
         </React.Fragment>
     )
 }
+
+export default Actor;

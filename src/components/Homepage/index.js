@@ -1,3 +1,3 @@
-import { Homepage } from './component';
+import Homepage from './component';
 
 export default Homepage;

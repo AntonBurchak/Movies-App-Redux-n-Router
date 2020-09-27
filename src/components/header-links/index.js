@@ -1,12 +1,12 @@
-import Actor from './component';
+import HeaderLinks from './HeaderLinks';
 import { connect } from 'react-redux'
 
 const mapStateToProps = (state) => ({
-    actors: state.filmlistReducer.actors,
+    isLogged: state.filmlistReducer.isLogged
 })
 
 const withStore = connect(
     mapStateToProps
 )
 
-export default withStore(Actor);
+export default withStore(HeaderLinks);

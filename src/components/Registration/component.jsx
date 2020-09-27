@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import '../Login/login.scss'
+import '../login/login.scss'
 
-const Registration = (props) => {
+class Registration extends React.Component {
 
-    const checkLoginBeforeLRegister = (login, pass) => {
-        const users = JSON.parse(localStorage.getItem('users'));
+    componentDidMount() {
+        this.props.fetchUsersList()
+    }
+
+    checkLoginBeforeLRegister = (login, pass) => {
+        const { registerUser, users } = this.props;
         const alreadyIsTaken = users.find(user => user.login === login);
-        const { setLogged } = props;
 
         if (alreadyIsTaken) {
             alert('Login is already taken. Please, choose another login');
@@ -18,36 +21,34 @@ const Registration = (props) => {
                     password: pass
                 }
 
-                const newUsers = [...users];
-                newUsers.push(newUser);
-
-                localStorage.setItem('users', JSON.stringify(newUsers))
-
+                registerUser(newUser);
                 alert('You successfully registered and loggen in. Now you have permission to all pages.')
-
-                return setLogged(true);
+                return this.props.history.push('/home');
             } else {
                 alert('Minimal size of password and login is 2 sybloms. Please, choose another login or password');
             }
         }
     }
 
-    const submitForm = (e) => {
-        e.preventDefault();
-        checkLoginBeforeLRegister(e.target.login.value, e.target.password.value);
+    submitForm = (event) => {
+        event.preventDefault();
+        this.checkLoginBeforeLRegister(event.target.login.value, event.target.password.value);
     }
+    
 
-    return (
-        <div className="Regist">
-            <h2>Зарегистрируйтесь, пожалуйста</h2>
-            <form className="form" onSubmit={submitForm}>
-                <input type="text" name="login" placeholder="Введите логин"/>
-                <input type="text" name="password" placeholder="Введите пароль"/>
-
-                <button>Зарегистрироваться</button>
-                <p>Уже зарегистрированы? <Link to="/login">Войдите</Link></p>
-            </form>
-        </div>
-    )
+    render() {
+        return (
+            <div className="Regist">
+                <h2>Зарегистрируйтесь, пожалуйста</h2>
+                <form className="form" onSubmit={this.submitForm}>
+                    <input type="text" name="login" placeholder="Введите логин"/>
+                    <input type="text" name="password" placeholder="Введите пароль"/>
+    
+                    <button>Зарегистрироваться</button>
+                    <p>Уже зарегистрированы? <Link to="/login">Войдите</Link></p>
+                </form>
+            </div>
+        )
+    }
 }
 export default withRouter(Registration)

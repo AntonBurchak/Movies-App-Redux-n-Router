@@ -1,10 +1,11 @@
-import { Film } from './Film'
+import Film  from './Film'
 import { connect } from 'react-redux';
 import { setLikedFilm, setDislikedFilm, insertFilmInfo, setStarsOnFilm } from '../../core/actions';
 
 const mapStateToProps = (state) => ({
   films: state.filmlistReducer.films
 })
+
 const mapDispatchToProps = ({
   setLikedFilm,
   setDislikedFilm,

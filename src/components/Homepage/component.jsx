@@ -1,17 +1,17 @@
 import React from 'react';
 
-import Header from '.././Header'
-import Sort from '.././Sort'
-import FilmsList from '.././FilmsList'
-import SearchField from '.././SearchField'
+import Header from '../header'
+import Sort from '../sort'
+import FilmsList from '../films-list'
+import SearchField from '.././search-field'
 
-export const Homepage = () => {
-    return (
-        <div className="app__list">
-            <Header />
-            <SearchField />
-            <Sort />
-            <FilmsList />
-        </div>
-    )
-}
+const Homepage = () => (
+    <div className="app__list">
+        <Header />
+        <SearchField />
+        <Sort />
+        <FilmsList />
+    </div>
+)
+
+export default Homepage;

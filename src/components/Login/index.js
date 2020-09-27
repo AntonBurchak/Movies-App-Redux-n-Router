@@ -1,13 +1,15 @@
 import Login from './component'
 import { connect } from 'react-redux';
-import { setLogged } from '../../core/actions'
+import { loginUser, fetchUsersList } from '../../core/actions'
 
 const mapStateToProps = (state) => ({
-    isLogged: state.filmlistReducer.isLogged
+    isLogged: state.usersReducer.isLogged,
+    users: state.usersReducer.users
 });
 
 const mapDispatchToProps = ({
-    setLogged
+    loginUser,
+    fetchUsersList
 });
 
 const withStore = connect(

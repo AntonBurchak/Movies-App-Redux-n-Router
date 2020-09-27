@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
-import { ProtectedRoute } from './component';
+import ProtectedRoute from './component';
 
 const mapStateToProps = (state) => ({
-    isLogged: state.filmlistReducer.isLogged,
+    isLogged: state.usersReducer.isLogged,
 })
 
 const withStore = connect(
