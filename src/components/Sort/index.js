@@ -1,6 +1,7 @@
 import Sort from './Sort'
 import { connect } from 'react-redux';
 import { sortBy, resetSorting } from '../../core/actions';
+import withTranslation from '../../hocs/withTranslation';
 
 const mapStateToProps = (state) => ({
     films: state.filmlistReducer.films
@@ -16,4 +17,14 @@ const withStore = connect(
     mapDispatchToProps
 )
 
-export default withStore(Sort);
+const words = [
+    'app-homepage-sort',
+    'app-homepage-sort-likes',
+    'app-homepage-sort-rating',
+    'app-homepage-sort-reset',
+]
+
+export default withTranslation(words)(withStore(Sort));
+
+
+

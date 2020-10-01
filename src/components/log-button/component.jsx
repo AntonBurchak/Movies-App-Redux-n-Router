@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { withRouter, Link } from 'react-router-dom'
 
 const LogButton = (props) => {
-    const logOut = () => {
+    const logOut = useCallback(() => {
         props.logOutUser();
         props.history.push('/home');
-    }
+    }, [])
+    
     return (
         <React.Fragment>
             {

@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Header = () => (
-    <h2>Movies</h2>
+const Header = (props) => (
+    <h2>{props['app-homepage-title']}</h2>
 )
 
 export default Header;

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, memo } from 'react';
 import { Link } from 'react-router-dom'
 
 const Film = (props) => {
@@ -30,8 +30,8 @@ const Film = (props) => {
             </React.Fragment>
         )
     }
-
-
+    
+   
     const film = props.film;
 
     return (
@@ -55,7 +55,7 @@ const Film = (props) => {
                     </div>
                     <div className="film__likes-main">
                         <span>{film.likes}</span>
-                        <span>likes</span>
+                        <span>{props['app-film-likes']}</span>
                     </div>
                 </div>
                 <div className="film__preview">
@@ -71,7 +71,7 @@ const Film = (props) => {
                 </div>
             </div>
             <div className="film__stars">
-                <span>Stars: {film.stars}</span>
+                <span>{props['app-film-stars']}: {film.stars}</span>
                 {renderStars()}
             </div>
         </div>
@@ -79,4 +79,4 @@ const Film = (props) => {
 
 }
 
-export default Film;
+export default memo(Film);

@@ -1,6 +1,7 @@
 import SearchField from './SearchField';
 import { connect } from 'react-redux'
 import { searchByText } from '../../core/actions';
+import withTranslation from '../../hocs/withTranslation';
 
 const mapStateToProps = (state) => ({
     films: state.filmlistReducer.films
@@ -15,4 +16,8 @@ const withStore = connect(
     mapDispatchToProps
 )
 
-export default withStore(SearchField);
+const words = [
+    'app-search-placeholder'
+];
+
+export default withTranslation(words)(withStore(SearchField));

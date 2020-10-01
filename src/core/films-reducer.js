@@ -29,7 +29,7 @@ const filmlistReducer = (state = initialState, action) => {
 
         case constants.SORT_BY: {
             const { films } = state, property = action.property;
-            const sorted = [...films].sort((a, b) => b[property] - a[property]);
+            const sorted = [...films].sort((left, right) => right[property] - left[property]);
 
             return { ...state, films: sorted }
         }

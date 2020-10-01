@@ -4,7 +4,7 @@ const Actor = (props) => {
     const id = +props.match.params.id;
     const actor = props.actors.find(actor => actor.id === id);
 
-    const goBack = useCallback(props.history.goBack, [])
+    const goBack = useCallback(props.history.goBack, [props.history])
 
     return (
         <React.Fragment>

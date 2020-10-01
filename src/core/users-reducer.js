@@ -1,16 +1,13 @@
-import { LOGIN_USER } from './constants'
-import { LOG_OUT_USER } from './constants'
-import { REGISTER_USER } from './constants'
-import { GET_USERS_LIST } from './constants'
+import * as constants from './constants'
 
 const initialState = {
-    isLogged: false,
+    isLogged: true,
     users: null
 }
 
 const usersReducer = (state = initialState, action) => {
     switch(action.type) {
-        case LOGIN_USER: {
+        case constants.LOGIN_USER: {
             const user = action.user[0];
             let logged = false;
             if(user) {
@@ -19,17 +16,17 @@ const usersReducer = (state = initialState, action) => {
 
             return {...state, isLogged: logged}
         }
-        case LOG_OUT_USER: {
+        case constants.LOG_OUT_USER: {
             const isLogged = false;
 
             return { ...state, isLogged}
         }
-        case REGISTER_USER: {
+        case constants.REGISTER_USER: {
             const isLogged = true;
 
             return { ...state, isLogged}
         }
-        case GET_USERS_LIST: {
+        case constants.GET_USERS_LIST: {
             const users = action.users;
 
             return { ...state, users }
@@ -37,4 +34,5 @@ const usersReducer = (state = initialState, action) => {
         default: return state;
     }
 }
+
 export default usersReducer;

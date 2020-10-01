@@ -136,3 +136,9 @@ export const updateFilmInfo = (id, data) => (dispatch, getState, callApi) => {
         dispatch(fetchFilmsList());
     })
 }
+
+
+export const login = (data) => ({
+    type: constants.LOGIN,
+    data
+})

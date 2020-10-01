@@ -22,3 +22,4 @@ export const LOG_OUT_USER = 'LOG_OUT_USER';
 export const REGISTER_USER = 'REGISTER_USER';
 export const GET_USERS_LIST = 'GET_USERS_LIST';
 export const RESET_FILM_INFO = 'RESET_FILM_INFO';
+export const LOGIN = 'LOGIN';

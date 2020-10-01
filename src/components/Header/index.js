@@ -1,3 +1,8 @@
 import Header from './Header';
+import withTranslation from '../../hocs/withTranslation';
 
-export default Header;
+const words = [
+    'app-homepage-title'
+]
+
+export default withTranslation(words)(Header);

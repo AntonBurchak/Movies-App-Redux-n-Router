@@ -6,10 +6,9 @@ import './index.css';
 
 import App from './App';
 
-import { users } from './users'
-
-if (!localStorage.getItem('users')) {
-    localStorage.setItem('users', JSON.stringify(users));
+if(!localStorage.getItem('lang')) {
+    localStorage.setItem('lang','ua-UA');
 }
+
 
 ReactDOM.render(<App />, document.getElementById('root'));

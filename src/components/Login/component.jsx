@@ -33,16 +33,17 @@ class Login extends React.Component {
     }
 
     render() {
+        const { props } = this;
         return (
             <div className="Login">
-                <h2>Войдите, пожалуйста</h2>
+                <h2>{props['app-login-title']}</h2>
                 <form className="form" onSubmit={this.submitForm}>
-                    <input type="text" name="login" placeholder="Введите логин"/>
-                    <input type="text" name="password" placeholder="Введите пароль"/>
+                    <input type="text" name="login" placeholder={props['app-login-log-placeholder']}/>
+                    <input type="text" name="password" placeholder={props['app-login-pass-placeholder']}/>
     
-                    <button>Войти</button>
+                    <button>{props['app-login-button']}</button>
                 </form>
-                <p>Не зарегистрированы? <Link to="/registration">Зерегистрируйтесь!</Link></p>
+                <p>{props['app-login-prompt']} <Link to="/registration">{props['app-login-reglink']}</Link></p>
             </div>
         )
     }
