@@ -1,12 +1,3 @@
-import { connect } from 'react-redux';
-import ProtectedRoute from './component';
+import ProtectedRoute from './protected-route';
 
-const mapStateToProps = (state) => ({
-    isLogged: state.usersReducer.isLogged,
-})
-
-const withStore = connect(
-    mapStateToProps
-)
-
-export default withStore(ProtectedRoute);
+export default ProtectedRoute;

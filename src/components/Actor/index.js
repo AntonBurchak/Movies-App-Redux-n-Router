@@ -1,12 +1,3 @@
-import Actor from './component';
-import { connect } from 'react-redux'
+import Actor from './actor';
 
-const mapStateToProps = (state) => ({
-    actors: state.filmlistReducer.actors,
-})
-
-const withStore = connect(
-    mapStateToProps
-)
-
-export default withStore(Actor);
+export default Actor;

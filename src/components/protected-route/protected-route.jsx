@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 
 const ProtectedRoute = ({ component: Component, isLogged, ...rest}) => (
@@ -8,4 +9,12 @@ const ProtectedRoute = ({ component: Component, isLogged, ...rest}) => (
     )} />
 )
 
-export default ProtectedRoute;
+const mapStateToProps = (state) => ({
+  isLogged: state.usersReducer.isLogged,
+})
+
+const withStore = connect(
+  mapStateToProps
+)
+
+export default withStore(ProtectedRoute);

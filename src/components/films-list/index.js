@@ -1,19 +1,3 @@
-import FilmsList from './FilmsList'
-import { connect } from 'react-redux';
-import { fetchFilmsList, fetchActorsList } from '../../core/actions';
+import FilmsList from './films-list'
 
-const mapStateToProps = (state) => ({
-    films: state.filmlistReducer.films
-})
-
-const mapDispatchToProps = ({
-    fetchFilmsList,
-    fetchActorsList
-})
-
-const withStore = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)
-
-export default withStore(FilmsList);
+export default FilmsList;

@@ -1,21 +1,22 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 import { insertFilmInfo, setChangedFilm, updateFilmInfo, fetchFilmsList } from '../../core/actions'
+import { compose } from 'redux';
 
 import '../film-info/film-info.scss';
 import './form-edit.scss';
 
 class FilmEdit extends React.Component {
     componentDidMount() {
-    if (!this.props.viewed) {
+        if (this.props.viewed) {
+            this.props.fetchFilmsList();
+        } else {
             const id = +this.props.match.params.id;
             const film = this.props.films.find(film => film.id === id);
 
             this.props.insertFilmInfo(film);
-        } else {
-            this.props.fetchFilmsList();
-        } 
+        }
     }
 
     render() {
@@ -81,9 +82,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     updateFilmInfo,
     fetchFilmsList,
     onSubmit: (data) => {
-        console.log(data);
         const prepareData = {
-            ...data, 
+            ...data,
             actorsIds: data.actorsIds.toString().split(',').map(actor => +actor),
             genres: data.genres.toString().split(',')
         }
@@ -91,31 +91,28 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         ownProps.history.push(`/film/${data.id}`);
     },
 })
+const mapStateToProps = (state) => ({
+    viewed: state.filmlistReducer.viewed,
+    actors: state.filmlistReducer.actors,
+    films: state.filmlistReducer.films,
+    initialValues: {
+        id: state.filmlistReducer.viewed.id,
+        title: state.filmlistReducer.viewed.title,
+        posterUrl: state.filmlistReducer.viewed.posterUrl,
+        director: state.filmlistReducer.viewed.director,
+        actorsIds: state.filmlistReducer.viewed.actorsIds,
+        genres: state.filmlistReducer.viewed.genres,
+        description: state.filmlistReducer.viewed.description,
+        likes: state.filmlistReducer.viewed.likes,
+        stars: state.filmlistReducer.viewed.stars,
+        liked: state.filmlistReducer.viewed.liked
+    }
+})
 
-FilmEdit = reduxForm({
-    form: 'initializeFromState' 
-})(FilmEdit)
-  
-FilmEdit = connect(
-    state => ({
-        viewed: state.filmlistReducer.viewed,
-        actors: state.filmlistReducer.actors,
-        films: state.filmlistReducer.films,
+const withReduxForm = reduxForm({ form: 'filmEdit' });
+const withStore = connect(mapStateToProps, mapDispatchToProps);
 
-        initialValues: {
-            id: state.filmlistReducer.viewed.id,
-            title: state.filmlistReducer.viewed.title,
-            posterUrl: state.filmlistReducer.viewed.posterUrl,
-            director: state.filmlistReducer.viewed.director,
-            actorsIds: state.filmlistReducer.viewed.actorsIds,
-            genres: state.filmlistReducer.viewed.genres,
-            description: state.filmlistReducer.viewed.description,
-            likes: state.filmlistReducer.viewed.likes,
-            stars: state.filmlistReducer.viewed.stars,
-            liked: state.filmlistReducer.viewed.liked
-        } 
-    }),
-    mapDispatchToProps
-)(FilmEdit)
-  
-export default FilmEdit;
+export default compose(
+    withStore,
+    withReduxForm
+)(FilmEdit);

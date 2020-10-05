@@ -1,3 +1,3 @@
-import FilmEdit from './component';
+import FilmEdit from './film-edit';
 
 export default FilmEdit;

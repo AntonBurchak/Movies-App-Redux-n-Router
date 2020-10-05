@@ -1,8 +1,11 @@
 import React, { useCallback, memo } from 'react';
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux';
+import { setLikedFilm, setDislikedFilm, insertFilmInfo, setStarsOnFilm } from '../../core/actions';
+import { compose } from 'redux';
+import translation from '../../hocs/translation';
 
 const Film = (props) => {
-
     const onStarsChange = (event) => {
         const value = event.target.getAttribute('data-value');
         props.setStarsOnFilm(props.film.id, value);
@@ -30,24 +33,33 @@ const Film = (props) => {
             </React.Fragment>
         )
     }
-    
-   
-    const film = props.film;
 
+    const { film } = props;
+
+    const setLikedFilm = useCallback(() => {
+        props.setLikedFilm(film.id)
+    }, [film.id, props])
+
+    const setDislikedFilm = useCallback(() => {
+        props.setDislikedFilm(film.id)
+    }, [film.id, props])
+
+    console.log('render')
     return (
+        
         <div className="app__films-item film" data-id={film.id}>
             <div className="film__main">
                 <div className="film__likes">
                     <div className="film__btns">
                         <button className={"film__likes-btn like" + (film.liked ? " active" : "")}
-                            onClick={() => props.setLikedFilm(film.id)}>
+                            onClick={() => props.setLike(film.id)}>
 
                             <i className="fa fa-thumbs-up"></i>
 
                         </button>
 
                         <button className={"film__likes-btn dislike" + (film.disliked ? " active" : "")}
-                            onClick={() => props.setDislikedFilm(film.id)}>
+                            onClick={setDislikedFilm}>
 
                             <i className="fa fa-thumbs-down"></i>
 
@@ -64,8 +76,7 @@ const Film = (props) => {
 
                     <div className="film__image">
 
-                        <img src={film.posterUrl}
-                            alt={film.title} />
+                        <img src={film.posterUrl} alt={film.title} />
 
                     </div>
                 </div>
@@ -79,4 +90,24 @@ const Film = (props) => {
 
 }
 
-export default memo(Film);
+const mapStateToProps = (state) => ({
+    films: state.filmlistReducer.films
+})
+
+const mapDispatchToProps = {
+    setLikedFilm,
+    setDislikedFilm,
+    insertFilmInfo,
+    setStarsOnFilm
+}
+const withStore = connect(mapStateToProps, mapDispatchToProps);
+const withTranslation = translation([
+    'app-film-likes',
+    'app-film-stars',
+]);
+
+export default compose(
+    memo,
+    withTranslation,
+    withStore
+)(Film);

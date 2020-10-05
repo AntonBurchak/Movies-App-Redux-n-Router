@@ -1,14 +1,15 @@
-import React, { createRef } from 'react';
-import { withRouter, Link } from 'react-router-dom';
+import React from 'react';
+import translation from '../../hocs/translation';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { registerUser, fetchUsersList } from '../../core/actions';
+import { compose } from 'redux';
 import '../login/login.scss'
 
+
 class Registration extends React.Component {
-
-    h2Ref = createRef();
-
     componentDidMount() {
         this.props.fetchUsersList();
-        console.log(this.h2Ref)
     }
 
     checkLoginBeforeLRegister = (login, pass) => {
@@ -55,4 +56,22 @@ class Registration extends React.Component {
         )
     }
 }
-export default withRouter(Registration)
+const mapStateToProps = (state) => ({
+    users: state.usersReducer.users
+});
+const mapDispatchToProps = { fetchUsersList, registerUser };
+const withStore = connect(mapStateToProps, mapDispatchToProps);
+const withTranslation  = translation([
+    'app-register-title',
+    'app-register-log-placeholder',
+    'app-register-pass-placeholder',
+    'app-register-button',
+    'app-register-prompt',
+    'app-register-reglink',
+])
+
+export default compose(
+    withTranslation,
+    withStore
+)(Registration)
+

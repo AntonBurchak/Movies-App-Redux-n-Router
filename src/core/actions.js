@@ -92,9 +92,14 @@ export const resetFilmInfo = () => ({
     type: constants.RESET_FILM_INFO
 })
 
+export const setCurrentLanguage = (data, lang) => ({
+    type: constants.SET_CURRENT_LANGUAGE,
+    data,
+    lang
+})
+
 export const fetchFilmsList = () => (dispatch, getState, callApi) => {
     callApi('movies').then(response => {
-        console.log(response.data);
         dispatch(filmsListLoaded(response.data));
     })
 }
@@ -137,6 +142,11 @@ export const updateFilmInfo = (id, data) => (dispatch, getState, callApi) => {
     })
 }
 
+export const fetchLanguages = (lang) => (dispatch, getState, callApi) => { // ua, en, ru, sp etc...
+    callApi(`langs/`).then(response => {
+        dispatch(setCurrentLanguage(response.data, lang));
+    });
+}
 
 export const login = (data) => ({
     type: constants.LOGIN,

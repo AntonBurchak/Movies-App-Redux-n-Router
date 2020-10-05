@@ -1,26 +1,26 @@
 import React from 'react';
 import { withRouter, Link} from 'react-router-dom';
-import './login.scss'
+import { connect } from 'react-redux';
+import { loginUser, fetchUsersList } from '../../core/actions';
+import { compose } from 'redux';
+import './login.scss';
+import translation from '../../hocs/translation';
 
 class Login extends React.Component {
-
     componentDidMount() {
         this.props.fetchUsersList();
     }
 
     checkDataBeforeLogging = (login, pass) => {
-        const { loginUser, isLogged, users } = this.props;
-        const neededUser = users.find(user => {
-            return user.login === login && user.password === pass
-        });
+        const neededUser = this.props.users.find(user => user.login === login && user.password === pass);
         
-        if (isLogged) {
+        if (this.props.isLogged) {
             alert('You already logged.');
         } else {
             if (neededUser) {
                 alert('You successfully logged');
-                loginUser(login, pass);
-                this.props.history.push('/home')
+                this.props.loginUser(login, pass);
+                this.props.history.push('/home');
             } else {
                 alert('Login or password is incorrect.');
             }
@@ -48,4 +48,25 @@ class Login extends React.Component {
         )
     }
 }
-export default withRouter(Login)
+
+const mapStateToProps = (state) => ({
+    isLogged: state.usersReducer.isLogged,
+    users: state.usersReducer.users
+});
+const mapDispatchToProps = { loginUser, fetchUsersList };
+const withStore = connect(mapStateToProps, mapDispatchToProps);
+const withTranslation = translation([
+    'app-login-title',
+    'app-login-log-placeholder',
+    'app-login-pass-placeholder',
+    'app-login-button',
+    'app-login-prompt',
+    'app-login-reglink',
+])
+
+// export default withRouter(withTranslation(withStore(Login)));
+export default compose(
+    withRouter,
+    withTranslation,
+    withStore
+)(Login)

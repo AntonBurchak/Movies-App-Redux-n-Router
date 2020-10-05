@@ -1,23 +1,20 @@
 
 export const searchByText = (text, originalFilms) => {
-    let filteredFilms = originalFilms.filter(film => {
+    const filteredFilms = originalFilms.filter(film => {
         const filmTitle = film.title.toLocaleLowerCase();
         const inputTitle = text.toLocaleLowerCase();
 
-        return filmTitle.indexOf(inputTitle) !== -1 ? true : false
+        return filmTitle.indexOf(inputTitle) !== -1;
     });
 
-    if (text.length === 0) {
-        filteredFilms = originalFilms;
-    }
-    return filteredFilms;
-    
-}
-export const updateFilmsArray = (state, film, property, propertyValue, type) => {
-    const { films, originalFilms } = state;
+    const result = text.length === 0 ? originalFilms : filteredFilms;
 
+    return result;
+}
+
+export const updateFilmsArray = (state, film, property, propertyValue, type) => {
     const newFilm = { ...film, [property]: propertyValue };
-    const updateFilmsArray = [...films];
+    const updateFilmsArray = [...state.films];
     const index = updateFilmsArray.indexOf(film);
 
     switch (type) {
@@ -34,11 +31,8 @@ export const updateFilmsArray = (state, film, property, propertyValue, type) => 
     newFilm[property] = propertyValue;
     updateFilmsArray[index] = newFilm;
 
-    const copyModifiedFilms = [...originalFilms];
+    const copyModifiedFilms = [...state.originalFilms];
     copyModifiedFilms[index] = newFilm;
     
-    return {
-      updateFilmsArray,
-      copyModifiedFilms
-    }
+    return { updateFilmsArray, copyModifiedFilms }
   }

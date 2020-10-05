@@ -1,6 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import translation from '../../hocs/translation';
 import './film-info.scss';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { insertFilmInfo, deleteFilm, fetchFilmInfo, resetFilmInfo, fetchActorsList } from '../../core/actions'
+
 
  class FilmInfo extends React.Component {
     componentDidMount() {
@@ -23,10 +28,9 @@ import './film-info.scss';
     }
 
     render () {
-        
-        const { props } = this;
+        const props = this.props;
         const id = +props.match.params.id;
-        console.log(props.viewed);
+        
         return (
             <React.Fragment>
                 {
@@ -54,5 +58,34 @@ import './film-info.scss';
         )
    }
 }
+const mapStateToProps = (state) => ({
+    viewed: state.filmlistReducer.viewed,
+    films: state.filmlistReducer.films,
+    actors: state.filmlistReducer.actors,
+})
 
-export default FilmInfo;
+const mapDispatchToProps = {
+    insertFilmInfo,
+    deleteFilm,
+    fetchFilmInfo,
+    resetFilmInfo,
+    fetchActorsList
+}
+const withStore = connect(mapStateToProps, mapDispatchToProps);
+const withTranslation = translation([
+    'app-filmpage-edit',
+    'app-filmpage-remove',
+    'app-filmpage-director',
+    'app-filmpage-actors',
+    'app-filmpage-genres',
+    'app-filmpage-description',
+    'app-film-likes',
+    'app-film-stars'
+]);
+
+
+// export default withTranslation((withStore(FilmInfo)));
+export default compose(
+    withTranslation,
+    withStore
+)(FilmInfo)

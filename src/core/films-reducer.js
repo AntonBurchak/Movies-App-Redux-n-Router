@@ -1,5 +1,5 @@
 import * as constants from './constants';
-import * as utils from './utils';
+import * as utils from '../utils/utils';
 
 
 const initialState = {
@@ -12,7 +12,6 @@ const initialState = {
 
 const filmlistReducer = (state = initialState, action) => {
     switch (action.type) {
-
         case constants.GET_FILMS_LIST: {
             return state
         }
@@ -28,8 +27,8 @@ const filmlistReducer = (state = initialState, action) => {
         }
 
         case constants.SORT_BY: {
-            const { films } = state, property = action.property;
-            const sorted = [...films].sort((left, right) => right[property] - left[property]);
+            const property = action.property;
+            const sorted = [...state.films].sort((left, right) => right[property] - left[property]);
 
             return { ...state, films: sorted }
         }
@@ -39,8 +38,7 @@ const filmlistReducer = (state = initialState, action) => {
         }
 
         case constants.SET_LIKED_FILM: {
-            const { films } = state, { id } = action;
-            const film = films.find(film => film.id === id);
+            const film = state.films.find(film => film.id === action.id);
 
             let maxLikes = film.likes;
             if (!film.liked) {
@@ -57,8 +55,7 @@ const filmlistReducer = (state = initialState, action) => {
         }
 
         case constants.SET_DISLIKED_FILM: {
-            const { films } = state, { id } = action;
-            const film = films.find(film => film.id === id);
+            const film = state.films.find(film => film.id === action.id);
 
             let maxLikes = film.likes;
             if (film.liked) {
@@ -73,54 +70,53 @@ const filmlistReducer = (state = initialState, action) => {
         }
 
         case constants.SET_STARS_ON_FILM: {
-            const { films } = state;
-            const { stars, id } = action;
-
-            const film = films.find(film => film.id === id);
+            const film = state.films.find(film => film.id === action.id);
 
             const { updateFilmsArray, copyModifiedFilms } =
-                utils.updateFilmsArray(state, film, 'stars', stars)
+                utils.updateFilmsArray(state, film, 'stars', action.stars)
 
             return { ...state, films: updateFilmsArray, originalFilms: copyModifiedFilms }
         }
 
         case constants.INSERT_FILM_INFO: {
-            const film = action.film;
-
-            return { ...state, viewed: film }
+            return { ...state, viewed: action.film }
         }
 
         case constants.SET_CHANGED_FILM: {
-            const { films } = state;
-            const { film } = action;
-            const copyFilms = [...films];
-            const editedFilm = copyFilms.find(el => el.id === film.id);
-            const index = films.findIndex(film => film.id === editedFilm.id);
+            const copyFilms = [...state.films];
+            const editedFilm = copyFilms.find(el => el.id === action.film.id);
+            const index = state.films.findIndex(film => film.id === editedFilm.id);
 
             copyFilms[index] = action.film;
 
             return { ...state, films: copyFilms, originalFilms: copyFilms }
         }
+
         case constants.DELETE_FILM: {
             const copyFilms = state.films.filter(film => film.id !== action.id);
 
             return { ...state, films: copyFilms, originalFilms: copyFilms }
         }
+
         case constants.FILMS_LIST_LOADING: {
             console.log('LOADING DATA...')
             return { ...state, isLoading: true };
         }
+
         case constants.FILMS_LIST_LOADED: {
             console.log('DATA LOADING FINISHED!')
 
             return { ...state, films: action.payload, originalFilms: action.payload }
         }
+
         case constants.ACTORS_LIST_LOADED: {
             return { ...state, actors: action.payload }
         }
+
         case constants.RESET_FILM_INFO: {
             return { ...state, viewed: null }
         }
+        
         default: return state;
     }
 }

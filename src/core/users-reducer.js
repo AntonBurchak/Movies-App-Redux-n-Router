@@ -9,11 +9,8 @@ const usersReducer = (state = initialState, action) => {
     switch(action.type) {
         case constants.LOGIN_USER: {
             const user = action.user[0];
-            let logged = false;
-            if(user) {
-                logged = true;
-            }
-
+            const logged = user ? true : false;
+            
             return {...state, isLogged: logged}
         }
         case constants.LOG_OUT_USER: {
